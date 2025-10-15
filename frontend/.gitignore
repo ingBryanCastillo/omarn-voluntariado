@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.pyc
+instance/
+.env
+
+# Node.js / React
+node_modules/
+build/
+dist/
+
+# Sistema
+.DS_Store
+Thumbs.db
