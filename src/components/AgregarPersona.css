@@ -1,0 +1,71 @@
+/* src/components/AgregarPersona.css */
+
+/* Estilo general del formulario */
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  max-width: 400px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: #658ec2;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Títulos */
+h2 {
+  text-align: center;
+  color: #4e4e4e;
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+}
+
+/* Estilo para los inputs y select */
+input, select {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+/* Efecto de foco en los inputs */
+input:focus, select:focus {
+  border-color: #3498db;
+}
+
+/* Botón de envío */
+button {
+  padding: 12px 20px;
+  font-size: 1.1rem;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Efecto hover en el botón */
+button:hover {
+  background-color: #2980b9;
+}
+
+/* Mensajes de error o éxito */
+.alert {
+  text-align: center;
+  margin-top: 15px;
+  font-weight: bold;
+}
+
+.success {
+  color: #28a745;  /* Verde para éxito */
+}
+
+.error {
+  color: #dc3545;  /* Rojo para error */
+}

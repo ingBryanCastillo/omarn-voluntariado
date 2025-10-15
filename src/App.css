@@ -1,38 +1,1415 @@
-.App {
+/* ====== Variables del Tema (Verde Suave) ====== */
+:root {
+  --bg: #f5fbf8;
+  --surface: #ffffff;
+  --text: #1f2937;
+  --muted: #6b7280;
+
+  --primary: #2e7d6b;      /* Color principal (verde) */
+  --primary-600: #256f62;  /* Tono más oscuro para :hover */
+  --primary-700: #1f5c55;  /* Tono aún más oscuro para :active */
+
+  --ring: #c7efe4; /* Color del borde al hacer focus en un input */
+
+  /* Colores para las insignias de estado */
+  --badge-pendiente: #f59e0b; /* ámbar */
+  --badge-realizada: #10b981; /* verde */
+  --badge-cancelada: #ef4444; /* rojo */
+}
+
+/* ====== Estilos Globales y Reset ====== */
+* {
+  box-sizing: border-box;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Inter, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+}
+
+/* ====== Header Superior ====== */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: var(--primary);
+  color: #fff;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, .10);
+}
+
+.header-title {
+  font-weight: 800;
+  letter-spacing: .4px;
+}
+
+.header-buttons {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+}
+
+/* ====== NAVBAR COMO PESTAÑAS DE NAVEGADOR ====== */
+.nav-tabs {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* Pestañas estilo navegador */
+.nav-tabs button {
+  background: transparent;
+  border: none;
+  color: #ffffffcc;
+  font-weight: 600;
+  padding: 8px 14px;
+  border-radius: 6px 6px 0 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.nav-tabs button:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Pestaña activa */
+.nav-tabs button.active {
+  background: #fff;
+  color: var(--primary);
+  font-weight: 700;
+  box-shadow: 0 -2px 6px rgba(0,0,0,0.15) inset;
+}
+
+/* Texto usuario */
+.nav-tabs span {
+  margin-left: 12px;
+  font-weight: 600;
+  color: #f1f1f1;
+}
+
+/* Botón cerrar sesión separado */
+.nav-tabs button.logout {
+  background: #dc4b44;
+  border-radius: 999px;
+  padding: 8px 14px;
+  margin-left: 12px;
+  color: #fff;
+}
+
+.nav-tabs button.logout:hover {
+  background: #c0392b;
+  color: #fff;
+}
+
+/* ====== Contenedor Principal y Ventana Estilo App ====== */
+.hero {
+  padding: 28px 12px;
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.window {
+  max-width: 1150px;
+  margin: 0 auto 26px;
+  background: var(--surface);
+  border-radius: 16px;
+  box-shadow: 0 20px 44px rgba(0, 0, 0, .08);
+  /* ✅ CAMBIO APLICADO AQUÍ */
+  overflow: initial !important; /* Solución para que los <select> no se corten */
+  border: 1px solid #eef4f1;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.window-bar {
   display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 14px;
+  background: linear-gradient(#fcfffe, #f2faf7);
+  border-bottom: 1px solid #edf6f2;
+}
+
+.win-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.win-red { background: #ff5f56; }
+.win-amber { background: #ffbd2e; }
+.win-green { background: #27c93f; }
+
+.window-title {
+  margin-left: 6px;
+  font-weight: 700;
+  color: #0f3a32;
+}
+
+/* ====== Secciones y Cards de Jornadas ====== */
+.section {
+  padding: 22px 18px 26px;
+}
+
+/* ... (El resto del código permanece igual) ... */
+
+.jornadas-section {
+  max-width: 1100px;
+  margin: 0 auto;
+  text-align: left;
+}
+.jornadas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+  gap: 18px;
+}
+.jornada-card {
+  background: #fff;
+  border-radius: 14px;
+  border: 1px solid #edf3f0;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, .06);
+  transition: transform .12s ease, box-shadow .12s ease;
+}
+.jornada-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, .08);
+}
+.jornada-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.jornada-badge {
+  color: #fff;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 12px;
+  text-transform: capitalize;
+}
+.jornada-badge.pendiente { background: var(--badge-pendiente); }
+.jornada-badge.realizada { background: var(--badge-realizada); }
+.jornada-badge.cancelada { background: var(--badge-cancelada); }
+.badge-confirmado {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: bold;
+  background: #e6f9f0;
+  color: #2e7d6b;
+  text-align: center;
+}
+.jornada-map {
+  font-size: 12px;
+  color: var(--primary);
+  text-decoration: underline;
+  cursor: pointer;
+}
+.jornada-map:hover {
+  opacity: .85;
+}
+.btn-inscribirme {
+  margin-top: auto;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 12px;
+  background: var(--primary);
+  color: #fff;
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(46, 125, 107, .25);
+  transition: background .12s ease;
+}
+.btn-inscribirme:hover { background: var(--primary-600); }
+.btn-inscribirme:active { background: var(--primary-700); }
+.form {
+  background: #fff;
+  padding: 16px;
+  border-radius: 12px;
+}
+.row {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+.row.two {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+.form input, .form select, .form textarea {
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #dbe7e3;
+  outline: none;
+  transition: border-color .12s ease, box-shadow .12s ease;
+}
+.form input:focus, .form select:focus, .form textarea:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--ring);
+}
+.error {
+  color: #c0392b;
+  margin-bottom: 10px;
+  font-size: 14px;
+}
+.btn {
+  background: var(--primary);
+  color: #fff;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.btn:hover {
+  background: var(--primary-600);
+}
+.btn.outline {
+  background: #fff;
+  color: var(--primary);
+  border: 1px solid var(--primary);
+}
+.table-wrap {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .06);
+  overflow: auto;
+  border: 1px solid #edf3f0;
+}
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.table th, .table td {
+  padding: 12px;
+  border-bottom: 1px solid #f0f4f2;
+}
+.table th {
+  text-align: left;
+  background: #f5fbf8;
+  color: #0f3a32;
+  font-size: 14px;
+}
+.acciones-btns {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.btn-sm {
+  display: inline-block;
+  padding: 6px 12px;
+  margin: 3px;
+  font-size: 13px;
+  border-radius: 20px;
+  border: none;
+  cursor: pointer;
+  background-color: #2e7d6b;
+  color: #fff;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+}
+.btn-sm:hover {
+  background-color: #25695a;
+  transform: translateY(-2px);
+}
+.btn-sm:active {
+  transform: translateY(0);
+}
+.btn-edit {
+  background-color: #fbbf24;
+  color: #000;
+}
+.btn-edit:hover {
+  background-color: #f59e0b;
+}
+.btn-sm:disabled {
+  opacity: .45;
+  cursor: not-allowed;
+  filter: grayscale(.2);
+  transform: none;
+}
+.btn-sm.danger {
+  background: #dc4b44;
+  color: white;
+}
+.btn-sm.danger:hover {
+  background: #c0392b;
+}
+.top-table td,
+.top-table th {
+  text-align: center;
+  vertical-align: middle;
+}
+.top-rank:nth-child(1) {
+  background-color: #fff7e6;
+}
+.top-rank:nth-child(2) {
+  background-color: #f0f0f0;
+}
+.top-rank:nth-child(3) {
+  background-color: #fff0e6;
+}
+.admin-wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.admin-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(9, 30, 27, .35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 50;
+}
+.modal {
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px;
+  width: 100%;
+  max-width: 640px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, .25);
+  border: 1px solid #ebf4f1;
+}
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+.dropdown > button {
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 10px 14px;
+}
+.dropdown > button.active {
+  border-bottom: 3px solid #fff;
+}
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background: #fff;
+  min-width: 180px;
+  border-radius: 8px;
+  box-shadow: 0 6px 18px rgba(0,0,0,.1);
+  z-index: 20;
+  overflow: hidden;
+}
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+.dropdown-content button {
+  display: block;
+  width: 100%;
+  background: none;
+  border: none;
+  text-align: left;
+  padding: 10px 14px;
+  font-size: 14px;
+  cursor: pointer;
+  color: #333;
+}
+.dropdown-content button:hover {
+  background: #f5fbf8;
+  color: var(--primary);
+}
+.solicitudes-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.solicitudes-form label {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.solicitudes-form .input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #dbe7e3;
+  border-radius: 10px;
+  background: #fff;
+  font-size: 14px;
+  transition: border-color .2s ease, box-shadow .2s ease;
+}
+.solicitudes-form .input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--ring);
+  outline: none;
+}
+.solicitudes-form button {
+  align-self: flex-start;
+  margin-top: 6px;
+}
+.table th {
+  font-weight: 700;
+}
+.table td {
+  font-size: 14px;
+  color: var(--text);
+}
+.estado-tag {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+.estado-pendiente {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+.estado-aprobada {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+.estado-rechazada {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+.styled-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 12px;
+}
+.styled-table th,
+.styled-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+}
+.styled-table th {
+  background-color: #f3f4f6;
+  font-weight: bold;
+}
+.styled-table tr:hover {
+  background-color: #f9fafb;
+}
+.btn-delete {
+  background-color: #dc2626;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+}
+.btn-delete:hover {
+  background-color: #b91c1c;
+}
+
+/* ✅ CÓDIGO AGREGADO PARA EL SELECT */
+.styled-table select {
+  position: relative;
+  z-index: 50;
+  background-color: white;
+}
+/* Forzar que los selects se muestren sobre todo */
+.styled-table select {
+  position: relative;
+  z-index: 9999 !important;
+  appearance: auto !important;
+  background-color: white;
+}
+
+/* Asegurar que el contenedor padre no corte el menú */
+.window,
+.section,
+.hero {
+  overflow: visible !important;
+  transform: none !important; /* evita que Chrome cree nuevos contextos de apilamiento */
+}
+
+/* ===== SweetAlert estilo OMARN ===== */
+.swal-omarn-popup {
+  border-radius: 18px !important;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.15) !important;
+  border: 1px solid #e3f2ed !important;
+  font-family: 'Inter', 'Segoe UI', sans-serif !important;
+}
+
+.swal-omarn-title {
+  color: #0f3a32 !important;
+  font-weight: 700 !important;
+  font-size: 20px !important;
+  margin-bottom: 14px !important;
+}
+
+.swal-omarn-select {
+  border-radius: 10px !important;
+  border: 1px solid #dbe7e3 !important;
+  padding: 8px 10px !important;
+  font-size: 15px !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.swal-omarn-select:focus {
+  border-color: #2e7d6b !important;
+  box-shadow: 0 0 0 3px #c7efe4 !important;
+}
+
+.swal-omarn-confirm {
+  background-color: #2e7d6b !important;
+  color: #fff !important;
+  border-radius: 10px !important;
+  padding: 10px 16px !important;
+  font-weight: 600 !important;
+  margin: 6px !important;
+  cursor: pointer !important;
+  transition: background 0.2s ease !important;
+}
+
+.swal-omarn-confirm:hover {
+  background-color: #256f62 !important;
+}
+
+.swal-omarn-cancel {
+  background-color: #f1f5f9 !important;
+  color: #374151 !important;
+  border-radius: 10px !important;
+  padding: 10px 16px !important;
+  font-weight: 600 !important;
+  margin: 6px !important;
+  cursor: pointer !important;
+  transition: background 0.2s ease !important;
+}
+
+.swal-omarn-cancel:hover {
+  background-color: #e2e8f0 !important;
+}
+
+.btn-sm.danger {
+  background-color: #dc2626;
+  color: #fff;
+}
+
+.btn-sm.danger:hover {
+  background-color: #b91c1c;
+}
+
+.noticia-card {
+  background: #fff;
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.06);
+  margin-bottom: 20px;
+  transition: transform 0.15s ease;
+}
+
+.noticia-card:hover {
+  transform: translateY(-3px);
+}
+
+.btn-delete {
+  background-color: #dc2626;
+  color: white;
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background 0.2s ease;
+}
+
+.btn-delete:hover {
+  background-color: #b91c1c;
+}
+
+.btn-edit {
+  background-color: #24fb27;
+  color: #000;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 10px;
+  padding: 8px 14px;
+  transition: background 0.2s ease;
+}
+.btn-edit:hover {
+  background-color: #366e19;
+}
+
+.section input[type="text"]::placeholder {
+  color: #9ca3af;
+}
+
+.section input[type="text"]:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px var(--ring);
+}
+.login-page {
+  display: flex;
+  height: 100vh;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
+  background-color: #f3f5f4;
+  overflow: hidden;
+}
+
+.banner-section {
+  position: relative;
+  width: 100%;
+  height: 40vh;
+}
+
+.banner-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.8);
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.3), transparent);
+}
+
+.logo-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  gap: 20px;
+}
+
+.logo {
+  height: 90px;
+  width: auto;
+  border-radius: 10px;
+  background-color: white;
+  padding: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+.login-card {
+  background: white;
+  padding: 2rem;
+  margin-top: -60px;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+  z-index: 2;
+}
+
+.login-card h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #2e7d6b;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.3rem;
+  font-weight: 600;
+  color: #333;
+}
+
+input {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+
+input:focus {
+  border-color: #2e7d6b;
+  outline: none;
+}
+
+.btn-login {
+  width: 100%;
+  background-color: #2e7d6b;
+  color: white;
+  border: none;
+  padding: 0.8rem;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s;
+}
+
+.btn-login:hover {
+  background-color: #256b5b;
+}
+
+.register-text {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.9rem;
+}
+
+.link {
+  color: #2e7d6b;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.loginfull-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  height: 100vh;
+  background: #f2f5f4;
+}
+
+.banner-area {
+  position: relative;
+  width: 100%;
+  height: 40vh;
+}
+
+.banner-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.8);
+}
+
+.banner-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.4), transparent);
+}
+
+.logos {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  gap: 20px;
+}
+
+.logo {
+  height: 90px;
+  border-radius: 10px;
+  background-color: white;
+  padding: 6px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.login-box {
+  background: white;
+  padding: 2rem;
+  margin-top: -50px;
+  border-radius: 14px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.15);
+  width: 90%;
+  max-width: 400px;
+  z-index: 2;
+  text-align: center;
+}
+
+.login-box h2 {
+  color: #2e7d6b;
+  margin-bottom: 1rem;
+}
+
+.form-group {
+  margin-bottom: 1rem;
+  text-align: left;
+}
+
+label {
+  font-weight: 600;
+  color: #333;
+  font-size: 0.9rem;
+}
+
+input {
+  width: 100%;
+  padding: 0.6rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+}
+
+input:focus {
+  border-color: #2e7d6b;
+  outline: none;
+}
+
+.btn-login {
+  width: 100%;
+  background: #2e7d6b;
+  color: white;
+  border: none;
+  padding: 0.8rem;
+  border-radius: 8px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-login:hover {
+  background: #256b5b;
+}
+
+.register-hint {
+  margin-top: 1rem;
+  color: #666;
+  font-size: 0.9rem;
+}
+.contacto-section {
+  padding-bottom: 60px;
+}
+
+.banner {
+  text-align: center;
+  background: linear-gradient(180deg, #1F6D5A 0%, #2e8b57 100%);
+  padding: 40px 20px;
+  border-radius: 14px;
+  color: #fff;
+  margin-bottom: 40px;
+}
+
+.banner .logo {
+  width: 100px;
+  height: auto;
+  margin: 0 10px;
+  vertical-align: middle;
+  border-radius: 12px;
+  background: #fff;
+  padding: 6px;
+}
+
+.faq details {
+  background: #f8f8f8;
+  border-radius: 8px;
+  padding: 12px 18px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+  transition: all 0.2s ease;
+}
+
+.faq summary {
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.faq details[open] {
+  background: #eafaf1;
+}
+
+.faq ul {
+  margin-top: 8px;
+  padding-left: 20px;
+}
+
+.form {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.form .row {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.form label {
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.form input,
+.form textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.btn {
+  background: #2e8b57;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background: #246c46;
+}
+/* ==============================
+   🌿 Header y Menú móvil moderno
+   ============================== */
+.header-logo {
+  height: 38px;
+  width: auto;
+  border-radius: 8px;
+  background: #fff;
+  padding: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.hamburger span {
+  width: 24px;
+  height: 3px;
+  background-color: #fff;
+  border-radius: 2px;
+  transition: all 0.3s ease;
+}
+
+.desktop-only {
+  display: flex;
+}
+
+/* === Menú móvil lateral === */
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none;
+  }
+  .hamburger {
+    display: flex;
+  }
+
+  .mobile-menu {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+  }
+
+  .mobile-menu.show {
+    pointer-events: all;
+  }
+
+  .mobile-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .mobile-menu.show .mobile-overlay {
+    opacity: 1;
+  }
+
+  .mobile-panel {
+    position: absolute;
+    top: 0;
+    right: -280px;
+    width: 250px;
+    height: 100%;
+    background: #ffffff;
+    box-shadow: -4px 0 14px rgba(0,0,0,0.3);
+    border-radius: 12px 0 0 12px;
+    padding: 18px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+    transition: right 0.3s ease;
+  }
+
+  .mobile-menu.show .mobile-panel {
+    right: 0;
+  }
+
+  .mobile-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .mobile-header img {
+    width: 42px;
+    height: 42px;
+    border-radius: 8px;
+  }
+
+  .mobile-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    color: var(--primary);
+    font-weight: 700;
+  }
+
+  .mobile-panel button {
+    background: none;
+    border: none;
+    text-align: left;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1f2937;
+    border-radius: 8px;
+    transition: background 0.2s ease;
+  }
+
+  .mobile-panel button:hover {
+    background: #e8f6f1;
+    color: var(--primary);
+  }
+
+  .mobile-panel .logout {
+    color: #dc2626;
+    margin-top: auto;
+  }
+
+  hr {
+    margin: 14px 0;
+    border: none;
+    border-top: 1px solid #e2e8f0;
+  }
+}
+/* =======================
+   🔧 Fix Logo y Header
+   ======================= */
+
+/* Contenedor del logo y texto */
+.header-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Logo controlado */
+.header-title img {
+  height: 42px;           /* tamaño equilibrado */
+  width: auto;
+  border-radius: 8px;
+  background: #fff;
+  padding: 3px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.25);
+  object-fit: contain;     /* evita distorsión */
+}
+
+/* Texto junto al logo */
+.header-title span {
+  font-weight: 700;
+  font-size: 1.2rem;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+/* Header alineado correctamente */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 20px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+/* =======================
+   📱 Modo móvil optimizado
+   ======================= */
+@media (max-width: 768px) {
+  .header {
+    flex-wrap: nowrap;
+    padding: 8px 16px;
   }
-  to {
-    transform: rotate(360deg);
+
+  .header-title img {
+    height: 36px; /* más compacto en móvil */
+    padding: 2px;
+  }
+
+  .header-title span {
+    font-size: 1rem;
+  }
+
+  /* Centrar el logo y dejar el menú a la derecha */
+  .header-title {
+    flex: 1;
+    justify-content: flex-start;
+  }
+
+  /* Ocultar la nav de escritorio */
+  .desktop-only {
+    display: none !important;
+  }
+
+  /* Mostrar el ícono hamburguesa */
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    cursor: pointer;
+  }
+
+  .hamburger span {
+    width: 25px;
+    height: 3px;
+    background-color: white;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+}
+
+/* ===== Hotfix: Logo del header (tamaño fijo y aislado) ===== */
+.brand-logo {
+  height: 38px !important;
+  width: 38px !important;          /* cuadrado controlado */
+  object-fit: contain !important;
+  border-radius: 8px;
+  background: #fff;
+  padding: 3px;
+  box-shadow: 0 2px 5px rgba(0,0,0,.25);
+  display: block;
+}
+
+/* ==============================================
+   🔧 FIX EXTREMO: Logo del Header 100% aislado
+   ============================================== */
+.header img[src*="logo_omarn"] {
+  height: 42px !important;
+  width: 42px !important;
+  max-height: 42px !important;
+  max-width: 42px !important;
+  object-fit: contain !important;
+  border-radius: 8px !important;
+  background: #fff !important;
+  padding: 3px !important;
+  box-shadow: 0 2px 5px rgba(0,0,0,.25) !important;
+  display: inline-block !important;
+  vertical-align: middle !important;
+}
+
+/* Evita herencia global de otras clases .logo */
+.header .logo,
+.header .logo-container,
+.header .logo-header {
+  all: unset !important;
+}
+
+/* =======================
+   📱 Nuevo menú móvil lateral (izquierda)
+   ======================= */
+@media (max-width: 768px) {
+  .desktop-only {
+    display: none !important;
+  }
+
+  .hamburger {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+  }
+
+  .hamburger span {
+    width: 26px;
+    height: 3px;
+    background-color: #fff;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+  }
+
+  /* Contenedor general del menú móvil */
+  .mobile-menu {
+    position: fixed;
+    inset: 0;
+    z-index: 100;
+    pointer-events: none;
+  }
+
+  .mobile-menu.show {
+    pointer-events: all;
+  }
+
+  .mobile-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.45);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+  }
+
+  .mobile-menu.show .mobile-overlay {
+    opacity: 1;
+  }
+
+  /* Panel lateral (izquierda) */
+  .mobile-panel.left {
+    position: absolute;
+    top: 0;
+    left: -280px;
+    width: 250px;
+    height: 100%;
+    background: var(--surface);
+    box-shadow: 4px 0 12px rgba(0,0,0,0.25);
+    border-radius: 0 12px 12px 0;
+    padding: 20px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: stretch;
+    transition: left 0.3s ease;
+  }
+
+  .mobile-menu.show .mobile-panel.left {
+    left: 0;
+  }
+
+  .mobile-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+
+  .mobile-header img {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background: #fff;
+    padding: 3px;
+  }
+
+  .mobile-header h3 {
+    margin: 0;
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 1.1rem;
+  }
+
+  .mobile-panel button {
+    background: none;
+    border: none;
+    text-align: left;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1f2937;
+    border-radius: 8px;
+    transition: background 0.2s ease;
+  }
+
+  .mobile-panel button:hover {
+    background: #e8f6f1;
+    color: var(--primary);
+  }
+
+  .mobile-panel .logout {
+    color: #dc2626;
+    margin-top: auto;
+  }
+
+  hr {
+    margin: 14px 0;
+    border: none;
+    border-top: 1px solid #e2e8f0;
+  }
+}
+/* ====================================
+   🧭 Fijar alineación logo + texto
+   ==================================== */
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.brand-logo {
+  height: 42px;
+  width: 42px;
+  border-radius: 8px;
+  background: #fff;
+  padding: 3px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.25);
+  object-fit: contain;
+}
+
+.brand-name {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: #fff;
+  letter-spacing: 0.5px;
+}
+
+/* ====================================
+   💻 Ocultar menú móvil en escritorio
+   ==================================== */
+@media (min-width: 769px) {
+  .hamburger,
+  .mobile-menu {
+    display: none !important;
+  }
+}
+
+/* ================================
+   📱 FIX: Top Voluntarios responsive
+   ================================ */
+.top-voluntarios-wrap {
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch; /* scroll suave en iOS */
+  border-radius: 12px;
+}
+
+/* Tabla adaptativa sin romper */
+.top-voluntarios-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 500px; /* evita compresión excesiva */
+}
+
+.top-voluntarios-table th,
+.top-voluntarios-table td {
+  padding: 10px 12px;
+  text-align: left;
+  white-space: nowrap; /* evita saltos feos */
+}
+
+/* Móvil: hace que se vea bien centrado */
+@media (max-width: 768px) {
+  .top-voluntarios-wrap {
+    box-shadow: 0 0 0 1px #e5e7eb;
+    margin-bottom: 12px;
+  }
+
+  .top-voluntarios-table {
+    min-width: 480px;
+  }
+
+  .window {
+    margin: 10px;
   }
 }
