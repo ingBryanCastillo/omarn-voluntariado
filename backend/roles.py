@@ -1,22 +1,33 @@
+# backend/roles.py
 from flask import Blueprint, jsonify
-from db import mysql
+from db import get_connection
 
 roles_bp = Blueprint('roles', __name__)
 
 @roles_bp.route('/api/roles', methods=['GET'])
 def listar_roles():
-    cur = mysql.connection.cursor()
-    cur.execute("SELECT id, nombre FROM roles ORDER BY id")
-    rows = cur.fetchall()
-    cur.close()
-    return jsonify([{'id': r[0], 'nombre': r[1]} for r in rows])
+    try:
+        conn = get_connection()
+        cur = conn.cursor(dictionary=True)
+        cur.execute("SELECT id, nombre FROM roles ORDER BY id")
+        rows = cur.fetchall()
+        cur.close()
+        conn.close()
+        return jsonify(rows), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500
 
 @roles_bp.route('/api/roles/<int:id>', methods=['GET'])
 def obtener_rol(id):
-    cur = mysql.connection.cursor()
-    cur.execute("SELECT id, nombre FROM roles WHERE id=%s", (id,))
-    r = cur.fetchone()
-    cur.close()
-    if not r:
-        return jsonify({'mensaje': 'Rol no encontrado'}), 404
-    return jsonify({'id': r[0], 'nombre': r[1]})
+    try:
+        conn = get_connection()
+        cur = conn.cursor(dictionary=True)
+        cur.execute("SELECT id, nombre FROM roles WHERE id=%s", (id,))
+        row = cur.fetchone()
+        cur.close()
+        conn.close()
+        if not row:
+            return jsonify({'mensaje': 'Rol no encontrado'}), 404
+        return jsonify(row), 200
+    except Exception as e:
+        return jsonify({'error': str(e)}), 500

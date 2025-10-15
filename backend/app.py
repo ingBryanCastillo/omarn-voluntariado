@@ -1,43 +1,40 @@
-from flask import Flask, jsonify
-from db import mysql  # <- importás desde db.py
-import config
-from auth import auth_bp
-from flask_cors import CORS  # <- Importamos CORS
-
+from flask import Flask
+from flask_cors import CORS
+from flask_bcrypt import Bcrypt
+from scheduler import iniciar_cron
+# --- 1. Creación e Inicialización ---
 app = Flask(__name__)
-app.register_blueprint(auth_bp)
+bcrypt = Bcrypt(app)
 
+# --- 2. Configuración ---
+app.config['SECRET_KEY'] = 'esta-es-una-clave-muy-secreta'
 
-# Habilitamos CORS para toda la aplicación
+# --- 3. Inicializar extensiones ---
 CORS(app)
 
-# Configurar conexión
-app.config['MYSQL_HOST'] = config.MYSQL_HOST
-app.config['MYSQL_USER'] = config.MYSQL_USER
-app.config['MYSQL_PASSWORD'] = config.MYSQL_PASSWORD
-app.config['MYSQL_DB'] = config.MYSQL_DB
+iniciar_cron()
 
-mysql.init_app(app)  # <- inicializás la conexión
-
-# Registrar los Blueprints
+# --- 4. Registro de Blueprints ---
+from auth import auth_bp
 from usuarios import usuarios_bp
-app.register_blueprint(usuarios_bp)
-
 from jornadas import jornadas_bp
-app.register_blueprint(jornadas_bp)
-
-from noticias import noticias_bp
-app.register_blueprint(noticias_bp)
-
-from personas import personas_bp
-app.register_blueprint(personas_bp)
-
-from roles import roles_bp
-app.register_blueprint(roles_bp)
-
 from catalogo_jornadas import catalogo_bp
+from noticias_routes import noticias_bp
+from participaciones import participaciones_bp
+from solicitudes import solicitudes_bp
+from contacto_routes import contacto_bp
+
+
+app.register_blueprint(contacto_bp)
+app.register_blueprint(auth_bp)
+app.register_blueprint(usuarios_bp)
+app.register_blueprint(jornadas_bp)
+app.register_blueprint(noticias_bp)
 app.register_blueprint(catalogo_bp)
+app.register_blueprint(participaciones_bp)
+app.register_blueprint(solicitudes_bp)
 
 
+# --- 5. Punto de entrada ---
 if __name__ == '__main__':
     app.run(debug=True)

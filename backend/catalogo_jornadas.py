@@ -1,42 +1,28 @@
+# catalogo_jornadas.py
 from flask import Blueprint, request, jsonify
-from db import mysql
+from db import get_connection
+import pymysql.cursors   # 👈 necesario para usar DictCursor
 
 catalogo_bp = Blueprint('catalogo_jornadas', __name__)
 
-def row_to_dict(row, cols):
-    return {cols[i][0]: row[i] for i in range(len(cols))}
-
-@catalogo_bp.route('/api/catalogo-jornadas', methods=['GET'])
+@catalogo_bp.route('/api/catalogo_jornadas', methods=['GET'])
 def listar_catalogo():
-    q = request.args.get('q', '').strip()
-    estado = request.args.get('estado', 'activo').strip()  # enum('activo','inactivo')
-
-    where = []
-    params = []
-    if estado in ('activo', 'inactivo'):
+    estado = request.args.get('estado')  # 'activo' / 'inactivo' / None
+    where, params = [], []
+    if estado:
         where.append("estado = %s")
         params.append(estado)
-    if q:
-        where.append("nombre LIKE %s")
-        params.append(f"%{q}%")
-    where_sql = " WHERE " + " AND ".join(where) if where else ""
+    where_sql = (" WHERE " + " AND ".join(where)) if where else ""
 
-    conn = mysql.connection
-    cur = conn.cursor()
-    cur.execute(f"""SELECT id, nombre, estado
-                    FROM catalogo_jornadas {where_sql}
-                    ORDER BY id DESC""", params)
+    conn = get_connection()
+    cur = conn.cursor(pymysql.cursors.DictCursor)  # 👈 aquí el cambio
+
+    cur.execute(
+        f"SELECT id, nombre, estado FROM catalogo_jornadas{where_sql} ORDER BY nombre ASC",
+        params
+    )
     rows = cur.fetchall()
-    data = [row_to_dict(r, cur.description) for r in rows]
-    return jsonify(ok=True, data=data)
+    cur.close()
+    conn.close()
 
-@catalogo_bp.route('/api/catalogo-jornadas/<int:id>', methods=['GET'])
-def detalle_catalogo(id):
-    conn = mysql.connection
-    cur = conn.cursor()
-    cur.execute("""SELECT id, nombre, estado
-                   FROM catalogo_jornadas WHERE id=%s""", (id,))
-    row = cur.fetchone()
-    if not row:
-        return jsonify(ok=False, error="No encontrado"), 404
-    return jsonify(ok=True, data=row_to_dict(row, cur.description))
+    return jsonify({"ok": True, "data": rows})
